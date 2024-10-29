@@ -15,10 +15,24 @@ fi
 
 #pulling upload speed
 upload=$(echo "$speed" | grep "Upload" | awk {'print int($2)'} | grep -v Mbit) 
+if [[ $upload -le 40 ]]; then
+    up_rev="bad"
+else
+    up_rev="good"    
+fi
 
 #leaving a review
-if { [ $download -gt 40 %% $upload -le 40] || [ $download -le 40 %% $upload -gt 40 ]; }; then
-    echo "Your download speed is $down_rev but your upload speed is $up_rev"
+if [[ $download -le 40 || $upload -le 40 ]]; then
+    rev="Your download speed is $down_rev but your upload speed is $up_rev"
 else
-    echo "Your downlad speed is $down_rev and your upload speed is $up_rev"
+    rev="Your download speed is $down_rev and your upload speed is $up_rev"
 fi
+
+log=speedlog.txt
+echo "
+$(date)
+Network: $(sudo nmcli dev wifi show | awk {'print $2'} | sed -n '1p')
+$speed
+$rev
+performed by $USER
+" >> $log

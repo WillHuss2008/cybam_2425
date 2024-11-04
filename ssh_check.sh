@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Get the public IP address
-ip_public=$(hostname -I | awk '{print $1}')  # Fixed the syntax here
-ip_gateway=$(route -n | awk 'NR==3 {print $2}')  # Simplified this line
+ip_public=$(sudo hostname -I | awk '{print $1}')  # Fixed the syntax here
+ip_gateway=$(sudo route -n | awk 'NR==3 {print $2}')  # Simplified this line
 SSID=$(sudo nmcli connection show --active | grep Auto | awk '{print $1, $2}')  # Fixed syntax
 
 # Check for established SSH connections
-searching=$(netstat -tnp | grep ":22.*ESTABLISHED")
+searching=$(sudo netstat -tnp | grep ":22.*ESTABLISHED")
 
 # Get PIDs of sshd processes
-killing=$(pstree -p | grep sshd | awk -F '[()]' '{print $2}')  # Fixed syntax
+killing=$(sudo pstree -p | grep sshd | awk -F '[()]' '{print $2}')  # Fixed syntax
 
 # Function to reconfigure network
 reconfigure_network() {
@@ -38,5 +38,7 @@ if [ -n "$searching" ]; then
     reconfigure_network
     sudo iptables -D INPUT -p tcp --dport 22 -j DROP
     echo "Port 22 open for use."
+else
+    echo "nothing found"
 fi
 

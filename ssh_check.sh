@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Get the public IP address
-ip_public=$(sudo hostname -I | awk '{print $1}')  # Fixed the syntax here
-ip_gateway=$(sudo route -n | awk 'NR==3 {print $2}')  # Simplified this line
-SSID=$(sudo nmcli connection show --active | grep Auto | awk '{print $1, $2}')  # Fixed syntax
+ip_public=$(hostname -I | awk '{print $1}')  # Fixed the syntax here
+ip_gateway=$(route -n | awk 'NR==3 {print $2}')  # Simplified this line
+SSID=$(sudo nmcli connection show --active | grep wifi | awk '{print $2}')  # Fixed syntax
 
 # Check for established SSH connections
-searching=$(sudo netstat -tnp | grep ":22.*ESTABLISHED")
+searching=$(netstat -atnp | grep ":22.*ESTABLISHED")
 
 # Get PIDs of sshd processes
-killing=$(sudo pstree -p | grep sshd | awk -F '[()]' '{print $2}')  # Fixed syntax
+killing=$(pstree -p | grep sshd | grep -o '[0-9]\+')
 
 # Function to reconfigure network
 reconfigure_network() {
@@ -20,9 +20,10 @@ reconfigure_network() {
         # Check if the IP is reachable
         if ! ping -c 1 -w 1 "$new_ip" &> /dev/null; then
             # Modify the connection with the new IP address
-            sudo nmcli con mod "$SSID" ipv4.addresses 192.168.1.$ip/24
+            sudo nmcli con mod "$SSID" ipv4.addresses $new_ip/24
             sudo nmcli con mod "$SSID" ipv4.gateway "$ip_gateway"
-            sudo nmcli con down "$SSID"
+            sudo nmcli con mod "$SSID" ipv4.dns "$ip_gateway, 0.0.0.0, 1.1.1.1, 1.0.0.1, 8.8.8.8, 8.8.4.4"
+            sudo nmcli con mod "$SSID" ipv4.method manual
             sudo nmcli con up "$SSID"
             break  # Exit after modifying the first available IP
         fi
@@ -39,6 +40,6 @@ if [ -n "$searching" ]; then
     sudo iptables -D INPUT -p tcp --dport 22 -j DROP
     echo "Port 22 open for use."
 else
-    echo "nothing found"
+    echo "no ssh connections"
 fi
 

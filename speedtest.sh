@@ -1,5 +1,5 @@
 #!/bin/bash
-log='/home/pi/Desktop/Logs/speedlog.txt'
+log='/home/william/Desktop/Logs/speedlog.txt'
 echo 'running script'
 
 #pulling speed

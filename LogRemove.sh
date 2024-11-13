@@ -1,6 +1,6 @@
 #!/bin/bash
 
-removelog="/home/william/Desktop/Logs/removelog"
+removelog="/home/pi/Desktop/Logs/removelog.txt"
 
 if [ $# -eq 0 ]; then
     echo "Error"

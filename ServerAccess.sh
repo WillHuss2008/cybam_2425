@@ -1,5 +1,6 @@
 #!/bin/bash
 #
+nmcli dev wifi list
 nmcli dev wifi connect CYB_Rogue password D0ntT3llem1
 
 echo "enter switch number"
@@ -18,7 +19,7 @@ elif [ $number = "4" ]; then
     ssh pi@192.168.0.44
 elif [ $number = "5" ]; then
     echo "accessing switch number 5"
-    ssh pi@192.168.0.237
+    ssh pi@192.168.0.5
 elif  [ $number = "8" ]; then
     echo "accessing switch number 8"
     ssh pi@192.168.0.96
@@ -30,7 +31,7 @@ elif [ $number = "10" ]; then
     ssh pi@192.168.0.51
 elif [ $number = "11" ]; then
     echo "accessing switch number 11"
-    ssh pi@192.186.0.208
+    ssh pi@192.168.0.208
 elif [ $number = "12" ]; then
     echo "accessing switch number 12"
     ssh pi@192.168.0.64
@@ -42,7 +43,7 @@ elif [ $number = "14" ]; then
     ssh pi@192.168.0.212
 elif [ $number = "15" ]; then
     echo "accessing swtich number 15"
-    ssh pi@192.186.0.63
+    ssh pi@192.168.0.63
 elif [ $number = "16" ]; then
     echo "accessing switch number 16"
     ssh pi@192.168.0.100

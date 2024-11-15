@@ -73,21 +73,12 @@ $
 ^
 &
 (
-)
--
-=
-_
-+
-,
-.
-/
-<
->
-?" > pass
+)" > pass
 
 # Step 1: Shuffle the contents of the file and concatenate them into one continuous string
 # head -c 12 uses the first 12 characters to make its password, you can adjust this to make it longer or shorter
-new_password=$(shuf pass | tr -d '\n' | shuf | head -c 12)
+num=$(shuf -i 6-20 -n 1)
+new_password=$(shuf pass | tr -d '\n' | shuf | head -c $num)
 
 # Step 2: Output the new password
 echo "New password: $new_password"

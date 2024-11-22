@@ -1,7 +1,0 @@
-#!/bin/bash
-cd 
-cd Desktop/cybam_2425
-git status
-git add .
-git commit -m "done"
-git push origin main

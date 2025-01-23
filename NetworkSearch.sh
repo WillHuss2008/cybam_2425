@@ -55,3 +55,5 @@ for i in $(seq 1 $lines2); do
     fi
 done
 echo "$lines1, $lines2"
+
+rm ScanThrough1 ScanThrough2 scan1 scan2 file1 file2

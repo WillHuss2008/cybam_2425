@@ -56,4 +56,32 @@
 ## Syntax
 $ sudo iptables -A <chain> -i <interface> -p <protocol> -s <source> -dport <port number> -j <target>
 $ sudo iptables -A INPUT -i wlan0 -p tcp -s SSH -dport 22 -j DROP
-$ sudo iptables -A INPUT -i eth0 -p tcp -s SSH -doprt 12825 -j ACCEP
+$ sudo iptables -A INPUT -i eth0 -p tcp -s SSH -doprt 12825 -j ACCEPT
+- replace "-A" with "-D" to delete the rule
+
+## Filtering Check
+- Fileter based on ip address
+- More for security purposes 
+$ sudo iptables -A INPUT -s <ipaddress> -j ACCEPT
+$ sudo iptables -A INPUT -s 192.168.1.21 -j ACCEPT
+    - Accepting from a local server with other files
+
+- Denying a connection follows the same pattern
+$ sudo iptables -A INPUT -s <ipaddress> -j DROP
+$ sudo iptables -A INPUT -s 192.168.1.71 -j DROP
+
+- Can reject a range like ufw 
+- Use the -m otpion, ip rance module, src-range DROP
+$ sudo iptbales -A INPUT -m iprange --src-range 10.20.30.100-10.20.30.200 -j DROP
+
+## Options
+-   -A      append
+-   -i      interface
+-   -p      protocol
+-   -s      source
+-   --dport destination port
+-   -j      target
+-   -D      delete
+-   -F      flush rules
+-   -X      delete chain
+-   -L --line-numbers

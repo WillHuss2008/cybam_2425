@@ -1,0 +1,31 @@
+## hydra
+
+- Usage between red and blue teams
+    - Red Teams: Use the application for brute foricng through logins
+    - Blue Teams: recognize weak passwords, helps setup better prevention measures, finds what passowrds are weak or not.
+
+- open-source
+- does more than just trying ssh
+- FTP, http, rdp
+- online cracker
+
+
+## usage
+
+- requirements
+    - username for the attack
+    - password or apssword list
+    - remote source or port needed to attack
+
+- options
+    -l = LOGIN or username
+    -L = LOGIN file (a file containing a list of usernames)
+    -p = PASSWORD
+    -P = PASSWORD LIST
+    -s = PORT
+    
+    $ hydra -l <username> -p <passwords> <service><ip address or domain>
+    $ hydra -l pi -p raspberry ssh://172.16.0.84
+
+    $ hydra -l <username> -p <passwords> -s <port> <ip address> <service>
+    $ hydra -l pi -p raspberry -s 65535 192.168.0.208 ssh

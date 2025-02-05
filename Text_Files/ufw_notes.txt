@@ -1,0 +1,62 @@
+## UFW
+- short for uncomplicated firewalls
+- easier compared to iptables
+- UFW runs on top of iptables
+- streamlined process
+- sudo mst be used for using any of the commands
+
+## installing
+$ sudo apt install ufw -y
+
+## checking status
+$ sudo ufw status
+$ sudo ufw status verbose
+$ sudo ufw status numbered
+
+## enable/disable
+$ sudo ufw enable
+    - denys devices access to localhost but allows localhost to interact with others
+$ sudo ufw disable
+
+## blocking ip addresses
+$ sudo ufw deny from <ip address>
+
+## blocking subnets
+$ sudo ufw deny from <ip address>/<subnet>
+$ sudo ufw deny from 192.168.1.0/24
+    - denys anyone from 192.168.1.0 to 192.168.1.255
+$ sudo ufw deny from 192.168.1.250/24
+    - denys anyone from 192.168.1.250 to 192.168.1.255
+
+
+## blocking an interface
+$ sudo ufw deny in on <interface> from <ip address>
+$ sudo ufw deny in on eth0 from 192.168.0.20
+    - denys 192.168.0.20 access to localhost from ethernet
+
+## blocking a port
+$ sudo ufw deny in from <ip address> to any port <port number>
+$ sudo ufw deny in from 192.168.0.200 to any port 22/tcp
+$ sudo ufw deny <start of port range>:<end of port range>/<port protocol>
+$ sudo ufw deny 2000:3000/tcp
+    - adds an ipv4 rule as well as a ipv6 rule
+
+## allow a connection
+- replace deny with allow
+$ sudo ufw allow from <ip address>
+$ sudo ufw allow from <ip address>/<subnet>
+$ sudo ufw allow in on <interface> from <ip address>
+
+## delete a rule
+$ sudo ufw delete <rule number>
+$ sudo ufw delete 1
+    - deletes the first rule on my ufw rules as long as you enter "y" when it asks if you want to
+
+## profile
+- pretty common for most network set-ups
+- there are IT profiles, salesforce profiels, etc ...
+$ sudo ufw app list
+    - lists all the application profiles on your device
+$ sudo ufw allow <profile name>
+$ sudo ufw allow OpenSSH
+    - adds an ipv6 rule as well as an ipv4 rule

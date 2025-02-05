@@ -1,0 +1,59 @@
+## IPtables
+
+
+## prerequisites
+- Understand firewalls ( beginner prespective)
+- how to read certain rules
+- Using UFW
+
+- harder to read
+- Default setting (means UFW sits on to pof iptables
+- Still used on most Linux servers
+
+## What IPtables is?
+- Firewall monitoring program, used to monitor traffic to and from your server
+- Contains rule (chains) for filtering traffic
+- Useful traffic for both outgonig and incoming
+
+## Rule Sets
+- Rule sets determine how packes are accepted or denied
+- that target might use specific rules
+- ACCEPT, DROP, RETURN
+    - ACCEPT: allow packet to pass through
+    - DROP: stop the packet from going through
+    - RETURN: stops the packet from going through chain and tells it to go back to previous rule
+
+## Filter Rules
+- INPUT, OUTPUT, FOWARD
+    - INPUT: allow incoming traffic/pakcets to go to the server
+    - OUTPUT: allows outgoing traffic from your server
+    - FORWARD: filters incoming packets that will be forward to another place.
+
+## Installation
+- usually preinstalled on Linux
+- if requried
+    $ sudo apt install iptables -y
+- to see list of rules
+    $ sudo iptables -L
+    - -L: list rules
+    - -v: verbose, shows more content
+- Default config for chain set ACCEPT
+    - it doesn't deny any traffic and allows packets to come through
+
+## Making A Chain
+- making a chain, making a link in a chain
+- Append to the end of the chain
+- Using the -A command
+    - -A: append to an existing rule or a new chain
+    $ sudo iptables -A etc
+- The append rule combines with other commands
+    - -i: Interface: network interface to allow filtering (wlan0, wlan1, eth0, lo)
+    - -p: Protocol: what rule/procedure takes place for the filtering (tcp/udp/icmp/ssh)
+    - -s: Source: source or address where traffic originates. Could be an ip address or hostanme/website
+    - -dport: Destination port (SSH, FTP, SMTP)
+    - -j: Target Name: targetname is only going to be one of the rule sets (ACCEPT, DROP, RETURN). ALWAYS NEEDED after every rule you make.
+
+## Syntax
+$ sudo iptables -A <chain> -i <interface> -p <protocol> -s <source> -dport <port number> -j <target>
+$ sudo iptables -A INPUT -i wlan0 -p tcp -s SSH -dport 22 -j DROP
+$ sudo iptables -A INPUT -i eth0 -p tcp -s SSH -doprt 12825 -j ACCEP
